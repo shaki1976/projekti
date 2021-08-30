@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#header-section {
+  background-color: #a8a8b2;
+}
+#ukupniPrihodi {
+  background-color: #28b9b4;
+}
+#ukupniRashodi {
+  background-color: #ff514a;
+  /* color: #ca9b96;  bojatexta i ikonice*/
+}
