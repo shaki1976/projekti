@@ -15,23 +15,56 @@ const confirmButton = document.querySelector(".add__btn");
 const incomeList = document.querySelector(".income__list");
 const expensesList = document.querySelector(".expenses__list");
 
-const allIncomes = [];
-const allExpenses = [];
+const brojaci = {
+  brojacRashoda = 0,
+  brojacPrihoda = 0,
+}
 
-class Income {
-  constructor(id, description, value){
+let podaci = {
+  allItems: { 
+  exp:[],
+  inc:[]
+  },
+  totals:{
+      exp:0,
+      inc:0
+  },
+  budget: 0,
+  procenat: -1
+};
+
+
+
+class Item {
+  constructor(id, description, value) {
     this.id = id;
     this.value = value;
     this.description = description;
   }
-  addToArray(item,arr){
-    arr.push(item);
+  addItem(tip, description, value){
+    let item;
+    let id;
+    if(tip == 'inc') {
+      id = brojacPrihoda++;
+      item = new Income(id,description, value);
+prihodi++;
+    }else {
+      id = brojacRashoda++;
+      item = new Expense(id,description, value);
+      rashodi++;
+    }
+    return item;
   }
 }
 
-class Expense extends Income {
-  constructor(id, description, value){
+class Income extends Item {
+  super(id, description, value);
+}
+
+class Expense extends Item {
+  constructor(id, description, value) {
     super(id, description, value);
     this.percentage = -1;
   }
 }
+
