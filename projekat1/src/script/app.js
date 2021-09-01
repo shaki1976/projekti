@@ -14,3 +14,24 @@ const confirmButton = document.querySelector(".add__btn");
 
 const incomeList = document.querySelector(".income__list");
 const expensesList = document.querySelector(".expenses__list");
+
+const allIncomes = [];
+const allExpenses = [];
+
+class Income {
+  constructor(id, description, value){
+    this.id = id;
+    this.value = value;
+    this.description = description;
+  }
+  addToArray(item,arr){
+    arr.push(item);
+  }
+}
+
+class Expense extends Income {
+  constructor(id, description, value){
+    super(id, description, value);
+    this.percentage = -1;
+  }
+}
