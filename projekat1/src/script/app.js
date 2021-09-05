@@ -1,6 +1,8 @@
-import { brojaci, podaci } from "./service.js";
-import { calculation } from "./service.js";
+import { brojaci, podaci, reRenderPercentages } from "./service.js";
+import { calculation, storeData } from "./service.js";
 import { prikaziDatum, renderTop, renderItem, clearInputs } from "./service.js";
+
+// ove sam koristio lokalno u funkcijama zato sam ih iskomentarisao:
 
 // const budgetTitleMonth = document.querySelector(".budget__title");
 // const budgetValue = document.querySelector(".budget__value");
@@ -108,8 +110,24 @@ function addingItemHandler() {
     podaci.percentage
   );
 
+  storeData();
   clearInputs(addDescription, addValue);
+  reRenderPercentages();
   console.log(podaci);
 }
 
 confirmButton.addEventListener("click", addingItemHandler);
+
+selectType.addEventListener("change", (event) => {
+  if (selectType.value == "exp") {
+    selectType.classList.add("red-focus");
+    addDescription.classList.add("red-focus");
+    addValue.classList.add("red-focus");
+    confirmButton.classList.add("red");
+  } else {
+    selectType.classList.remove("red-focus");
+    addDescription.classList.remove("red-focus");
+    addValue.classList.remove("red-focus");
+    confirmButton.classList.remove("red");
+  }
+});

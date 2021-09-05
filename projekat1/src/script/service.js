@@ -63,6 +63,8 @@ function removeItem(id, tip, rendEl) {
     podaci.budget,
     podaci.percentage
   );
+  reRenderPercentages();
+  storeData();
 }
 
 let getMonth = (date) => {
@@ -103,12 +105,28 @@ let getYear = (date) => {
   return date.getFullYear();
 };
 
+function storeData() {
+  localStorage.clear(); //ovako se osiguravam da je uvek sacuvano sa poslednjom promenom
+  const data = JSON.stringify(podaci);
+  const sviPodaci = localStorage.setItem("podaci", data);
+  return sviPodaci;
+}
+// function redFokus(el) {
+//   if (el.value == "exp") {
+//     this.classList.add("red-focus");
+//   } else {
+//     this.classList.remove("red-focus");
+//   }
+// }
+
 export {
   calculateTotalExpenses,
   calculateTotalIncomes,
   calulateBudget,
   calculatePercentage,
   calculation,
+  storeData,
+  // redFokus,
 };
 
 // fje za renderovanje
@@ -159,6 +177,27 @@ function renderPercentage(value) {
   itemPercentageDiv.textContent = `${perc}%`;
 
   return itemPercentageDiv;
+}
+
+// function clearEventListeners(element) {
+//   const clonedElement = element.cloneNode(true);
+//   element.replaceWith(clonedElement);
+//   return clonedElement;
+// }
+function reRenderPercentages() {
+  let percentageElements = document.getElementsByClassName("item__percentage");
+  percentageElements = Array.from(percentageElements);
+
+  if (percentageElements.length > 0) {
+    percentageElements.forEach((element) => {
+      // const clonedElement = element.cloneNode(true); // nije potreban
+      let text = element.previousElementSibling.textContent;
+      text = text.trim().split(" ");
+      text = Number(text[0]);
+      let perc = calculatePercentage(podaci.totals.inc, text);
+      element.textContent = `${perc}%`;
+    });
+  } else return;
 }
 
 function renderItem(tip, id, description, value) {
@@ -213,4 +252,11 @@ function renderItem(tip, id, description, value) {
   if (tip == "inc") incomeList.append(itemDiv);
   else expensesList.append(itemDiv);
 }
-export { prikaziDatum, renderTop, renderItem, clearInputs };
+
+export {
+  prikaziDatum,
+  renderTop,
+  renderItem,
+  clearInputs,
+  reRenderPercentages,
+};
